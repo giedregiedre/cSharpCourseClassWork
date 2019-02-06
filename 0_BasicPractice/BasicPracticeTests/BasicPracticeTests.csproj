@@ -49,7 +49,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProgramTest.cs" />
+    <Compile Include="LoopTest.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="ConditionTest.cs" />
+    <Compile Include="VariableTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
