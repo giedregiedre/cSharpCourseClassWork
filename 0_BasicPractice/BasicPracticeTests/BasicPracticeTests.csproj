@@ -59,9 +59,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BasicPractice\BasicPractice.csproj">
-      <Project>{65ed0b40-f351-45bf-a539-47fa184ee7b5}</Project>
-      <Name>BasicPractice</Name>
+    <ProjectReference Include="..\BasicPracticeSolution\BasicPracticeSolution.csproj">
+      <Project>{5d0e2fcb-503f-4c5d-b2db-225c2ca5ac61}</Project>
+      <Name>BasicPracticeSolution</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
