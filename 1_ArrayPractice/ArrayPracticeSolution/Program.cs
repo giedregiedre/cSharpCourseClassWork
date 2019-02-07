@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,10 +13,10 @@ namespace ArrayPractice
             Console.WriteLine("Array practice!");
 
             /*
-                Parašyti funkciją, kuri paprašo vartotoją įvesti 5 string tekstus, įrašo juos į masyvą, ir grazina.
+              Parašyti funkciją, kuri paprašo vartotoją įvesti 5 string tekstus, įrašo juos į masyvą, ir grazina.
                 ... ir atspausdina įvestus žodžius paeiliui kaip vieną sakinį. (sujungta be tarpu.)
                 ... ir atspausdina jį atvirkščiai. (sujungta be tarpu.)
-            */
+             */
 
             // - Sukurkite static public funkcija : InputFiveToArray
 
@@ -92,7 +92,131 @@ namespace ArrayPractice
 
             // - Atspausdinkite visus kintamuosius.
 
+
+            //InputFiveToArray();
+
+            //RemoveDuplicatesFromArray(new string[] { "Mano", "batai", "Mano", "buvo", "batai", "buvo", "du", "buvo", "du", "." });
+
+            //ArrayReferenceTest();
+
+            ParamsTesting(12345678, new float[] { 1.2f, 3.4f, 5.6f }, "Labas", "rytas", "-", "mano", "saule!");
+
             Console.ReadKey();
+        }
+
+        public static string[] InputFiveToArray()
+        {
+            string[] input = new string[5];
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                Console.WriteLine($"Iveskite teksta {i + 1}'taji teksta:");
+                input[i] = Console.ReadLine();
+            }
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                Console.Write(input[i]);
+            }
+
+            Console.WriteLine();
+
+            for (int i = input.Length - 1; i >= 0; i--)
+            {
+                Console.Write(input[i]);
+            }
+            return input;
+        }
+
+        public static void RemoveDuplicatesFromArray(string[] data)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                for (int j = i + 1; j < data.Length; j++)
+                {
+                    if (data[i] == data[j])
+                    {
+                        data[j] = "!";
+                    }
+                }
+            }
+
+            foreach (string item in data)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+
+            int endPosition = 0;
+            for (int i = 0; i < data.Length - endPosition; i++)
+            {
+                if (data[i] == "!")
+                {
+                    for (int j = i; j < data.Length - 1; j++)
+                    {
+                        data[j] = data[j + 1];
+                    }
+                    data[data.Length - 1] = "!";
+
+                    endPosition++;
+                    i--;
+                }
+
+            }
+
+            foreach (string item in data)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void ArrayReferenceTest()
+        {
+            int[] data = { 1, 2, 3, 4, 5 };
+
+            foreach (int number in data)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+
+            SpoilArray((int[])data.Clone());
+
+            foreach (int number in data)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void SpoilArray(int[] data)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = -1;
+            }
+        }
+
+
+        public static void ParamsTesting(int number, float[] floatArr, params string[] parameters)
+        {
+            Console.WriteLine(number);
+
+            foreach (float flt in floatArr)
+            {
+                Console.Write(flt + " ");
+            }
+            Console.WriteLine();
+
+            foreach (string param in parameters)
+            {
+                Console.Write(param + " ");
+            }
+            Console.WriteLine();
+
         }
     }
 }
