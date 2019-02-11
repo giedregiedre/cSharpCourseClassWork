@@ -1,6 +1,7 @@
 using ArrayPractice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -86,12 +87,11 @@ public class _4_ParamsTestingTest
         {
             Console.SetOut(sw);
 
-            string[] data = new string[] { "Mano", "batai", "Mano", "buvo", "batai", "buvo", "du", "buvo", "du", "." };
-
             //Program.ParamsTesting();
-            methodInfo.Invoke(null, new object[] { 12345678, new float[] { 1.2f, 3.4f, 5.6f }, "Labas", "rytas", "-", "mano", "saule!" });
+            methodInfo.Invoke(null, new object[] { 12345678, new float[] { 1.2f, 3.4f, 5.6f } , new string[]{ "Labas", "rytas", "-", "mano", "saule!" } });
 
-            if (!sw.ToString().Contains("12345678"))
+            string output = sw.ToString();
+            if (!output.Contains("12345678"))
             {
                 Assert.Fail("ParamsTesting should print int parameter.");
             }
@@ -107,10 +107,8 @@ public class _4_ParamsTestingTest
         {
             Console.SetOut(sw);
 
-            string[] data = new string[] { "Mano", "batai", "Mano", "buvo", "batai", "buvo", "du", "buvo", "du", "." };
-
             //Program.ParamsTesting();
-            methodInfo.Invoke(null, new object[] { 12345678, new float[] { 1.2f, 3.4f, 5.6f }, "Labas", "rytas", "-", "mano", "saule!" });
+            methodInfo.Invoke(null, new object[] { 12345678, new float[] { 1.2f, 3.4f, 5.6f }, new string[] { "Labas", "rytas", "-", "mano", "saule!" } });
 
             if (!sw.ToString().Contains("1.2 3.4 5.6"))
             {
@@ -128,10 +126,8 @@ public class _4_ParamsTestingTest
         {
             Console.SetOut(sw);
 
-            string[] data = new string[] { "Mano", "batai", "Mano", "buvo", "batai", "buvo", "du", "buvo", "du", "." };
-
             //Program.ParamsTesting();
-            methodInfo.Invoke(null, new object[] { 12345678, new float[] { 1.2f, 3.4f, 5.6f }, "Labas", "rytas", "-", "mano", "saule!" });
+            methodInfo.Invoke(null, new object[] { 12345678, new float[] { 1.2f, 3.4f, 5.6f }, new string[] { "Labas", "rytas", "-", "mano", "saule!" } });
 
             if (!sw.ToString().Contains("Labas rytas - mano saule!"))
             {

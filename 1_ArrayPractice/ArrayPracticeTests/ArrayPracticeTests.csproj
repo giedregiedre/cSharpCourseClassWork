@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ArrayPractice\ArrayPractice.csproj" />
+    <ProjectReference Include="..\ArrayPracticeSolution\ArrayPracticeSolution.csproj" />
   </ItemGroup>
 
 </Project>
