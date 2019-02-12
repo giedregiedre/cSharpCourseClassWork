@@ -5,11 +5,11 @@ class Program
 
     static void Main()
     {
-        // TODO : keiskite FROM..TO skaicius pagal tai kiek spesite padaryt uzduociu. (-19...19, -99..99, ir tt.)
         // min skaicius 
-        const int FROM_NUMBER = -9;
+        const int FROM_NUMBER = -1000000000;
+
         // max skaicius 
-        const int TO_NUMBER = 9;
+        const int TO_NUMBER = 1000000000;
 
         string inputString = "";
         int inputNumber = 0;
@@ -19,22 +19,22 @@ class Program
         {
             Console.Write("\n(Enter SPACE to exit.)\nIveskite skaiciu:");
             inputString = Console.ReadLine();
-            if (checkIfGoodNumber(inputString))
+            if (CheckIfGoodNumber(inputString))
             {
                 Console.WriteLine("Skaicius teisingas!");
                 inputNumber = Convert.ToInt32(inputString);
-                if (checkIfNumberInRange(FROM_NUMBER, TO_NUMBER, inputNumber))
+                if (CheckIfNumberInRange(FROM_NUMBER, TO_NUMBER, inputNumber))
                 {
-                    Console.WriteLine("Skaicius {0} zodziais: {1}", inputNumber, changeNumberToText(inputNumber));
+                    Console.WriteLine($"Skaicius {inputNumber} zodziais:\n {ChangeNumberToText(inputNumber)}");
                 }
                 else
                 {
-                    Console.WriteLine("Blogas skaicius {0}, prasau ivesti skaiciu reziuose: {1}..{2}", inputString, FROM_NUMBER, TO_NUMBER);
+                    Console.WriteLine($"Blogas skaicius {inputString}, prasau ivesti skaiciu reziuose: {FROM_NUMBER}..{TO_NUMBER}");
                 }
             }
             else
             {
-                Console.WriteLine("Ivesti duomenys:{0} nera skaicius!", inputString);
+                Console.WriteLine($"Ivesti duomenys:{inputString} nera skaicius!");
             }
         }
 
@@ -43,41 +43,269 @@ class Program
     }
 
     // bendra funkcija apjungti visom funkcijom kurias jus sukursit.
-    static string changeNumberToText(int number)
+    static string ChangeNumberToText(int number)
     {
-        // TODO : pakeiskite sita funkcija pagal savo poreiki. (tiek kiek skaiciu spesite apdorot.)
-        return changeOnesToText(number);
+        string output = "";
+        if (number < 0)
+        {
+            output = "minus ";
+            number *= -1;
+        }
+        if (number < 1000000000)
+        {
+            ChangeMillionsToText(number, ref output);
+        }
+        else
+        {
+            output += "KLAIDA! neapdorotas skaicius: " + number;
+        }
+        return output;
+    }
+
+    // prideda milijonus
+    static void ChangeMillionsToText(int number, ref string output)
+    {
+        if (number < 1000000)
+        {
+            ChangeThousandsToText(number, ref output);
+        }
+        else
+        {
+            int milijonai = number / 1000000;
+            int tuksanciai = number % 1000000;
+
+            if (milijonai > 0)
+            {
+                if (milijonai == 1)
+                {
+                    output += "milijonas";
+                }
+                else
+                {
+                    ChangeHundredsToText(milijonai, ref output);
+                    if (milijonai % 10 == 0)
+                    {
+                        output += " milijonu";
+                    }
+                    else if (milijonai % 10 == 1)
+                    {
+                        output += " milijonas";
+                    }
+                    else
+                    {
+                        output += " milijonai";
+                    }
+                }
+            }
+            // pridet tukstancius
+            if (tuksanciai != 0)
+            {
+                output += " ";
+                ChangeThousandsToText(tuksanciai, ref output);
+            }
+        }
+    }
+
+    // prideda tukstancius.
+    static void ChangeThousandsToText(int number, ref string output)
+    {
+        if (number < 1000)
+        {
+            ChangeHundredsToText(number, ref output);
+        }
+        else
+        {
+            int tukstanciai = number / 1000;
+            int simtai = number % 1000;
+
+            if (tukstanciai > 0)
+            {
+                if (tukstanciai == 1)
+                {
+                    output += "tukstantis";
+                }
+                else
+                {
+                    ChangeHundredsToText(tukstanciai, ref output);
+                    if (tukstanciai % 10 == 0)
+                    {
+                        output += " tukstanciu";
+                    }
+                    else if (tukstanciai % 10 == 1)
+                    {
+                        output += " tukstantis";
+                    }
+                    else
+                    {
+                        output += " tukstanciai";
+                    }
+                }
+            }
+            // pridet simtus
+            if (simtai != 0)
+            {
+                output += " ";
+                ChangeHundredsToText(simtai, ref output);
+            }
+        }
+    }
+
+    // prideda simtus
+    static void ChangeHundredsToText(int number, ref string output)
+    {
+        if (number < 100)
+        {
+            ChangeTensToText(number, ref output);
+        }
+        else
+        {
+            int simtai = number / 100;
+            int vienetai = number % 100;
+
+            if (simtai > 0)
+            {
+                if (simtai == 1)
+                {
+                    output += "simtas";
+                }
+                else
+                {
+                    ChangeTensToText(simtai, ref output);
+                    output += " simtai";
+                }
+            }
+            // pridet desimtis
+            if (vienetai != 0)
+            {
+                output += " ";
+                ChangeTensToText(vienetai, ref output);
+            }
+        }
+    }
+
+    // prideda dasimtis
+    static void ChangeTensToText(int number, ref string output)
+    {
+        if (number < 20)
+        {
+            ChangeTeensToText(number, ref output);
+        }
+        else
+        {
+            int desimtys = number / 10;
+            int vienetai = number % 10;
+
+            // pridet desimtys
+            switch (desimtys)
+            {
+                case 0: output += ""; break;
+                case 1: output += "desimt"; break;
+                case 2: output += "dvidesimt"; break;
+                case 3: output += "trisdesimt"; break;
+                case 4: output += "keturiasdesimt"; break;
+                case 5: output += "penkiasdesimt"; break;
+                case 6: output += "sesiasdesimt"; break;
+                case 7: output += "septyniasdesimt"; break;
+                case 8: output += "astuoniasdesimt"; break;
+                case 9: output += "devyniasdesimt"; break;
+                default: output += "KLAIDA! neapdorotas skaicus:" + number; break;
+            }
+
+            // pridet vienetus
+            if (vienetai != 0)
+            {
+                output += " ";
+                ChangeOnesToText(vienetai, ref output);
+            }
+        }
+    }
+
+    // prideda niolikas.
+    static void ChangeTeensToText(int number, ref string output)
+    {
+        if (number < 10)
+        {
+            ChangeOnesToText(number, ref output);
+        }
+        else
+        {
+            switch (number)
+            {
+                case 10: output += "desimt"; break;
+                case 11: output += "vienualika"; break;
+                case 12: output += "dvylika"; break;
+                case 13: output += "trylika"; break;
+                case 14: output += "keturiolika"; break;
+                case 15: output += "penkiolika"; break;
+                case 16: output += "sesiolika"; break;
+                case 17: output += "septyniolika"; break;
+                case 18: output += "astuoniolika"; break;
+                case 19: output += "devyniolika"; break;
+                default: output += "KLAIDA! neapdorotas skaicus:" + number; break;
+            }
+        }
+    }
+
+    // prideda vienetus.
+    static void ChangeOnesToText(int number, ref string output)
+    {
+        switch (number)
+        {
+            case 0: output += "nulis"; break;
+            case 1: output += "vienas"; break;
+            case 2: output += "du"; break;
+            case 3: output += "trys"; break;
+            case 4: output += "keturi"; break;
+            case 5: output += "penki"; break;
+            case 6: output += "sesi"; break;
+            case 7: output += "septyni"; break;
+            case 8: output += "astuoni"; break;
+            case 9: output += "devyni"; break;
+            default: output += "KLAIDA! neapdorotas skaicus:" + number; break;
+        }
     }
 
     // funkcija gauna string skaiciu, patikrina ar skaicius teisingu formatu. Pvz: "123", "-123" grazina true. "12a3", "1-23" grazina false.
-    static bool checkIfGoodNumber(string dataToCheck)
+    static bool CheckIfGoodNumber(string dataToCheck)
     {
-        throw new NotImplementedException("TODO: grazinkite true, jei tekstas yra teisingas skaicius.");
+        // tikrinam ar ne tuscias tekstas.
+        if (dataToCheck == "")
+        {
+            return false;
+        }
+
+        for (int i = 0; i < dataToCheck.Length; i++)
+        {
+            char ch = dataToCheck[i];
+
+            // tikrinam ar simbolis yra skaicius.
+            if (ch != '0' && ch != '1' && ch != '2' && ch != '3' && ch != '4' && ch != '5' && ch != '6' && ch != '7' && ch != '8' && ch != '9')
+            {
+                if (ch == '-' && i != 0)
+                {
+                    {
+                        // ne skaicius, minusas... bet ne pirmoi pozicijoi.
+                        return false;
+                    }
+                }
+                else
+                {
+                    // ne skaiciuss ir ne minusas. 
+                    return false;
+                }
+            }
+        }
+        // neradome jokiu klaidu - geras skaicius.
+        return true;
     }
 
     // funkcija gauna true jei skaicius checkNumber yar tarp fromNumber ir toNumber (imtinai)
-    private static bool checkIfNumberInRange(int fromNumber, int toNumber, int checkNumber)
+    private static bool CheckIfNumberInRange(int fromNumber, int toNumber, int checkNumber)
     {
-        throw new NotImplementedException("TODO: Patikrinkite ar checkNumber yar tarp skaiciu fromNumber,  toNumber");
+        return checkNumber > fromNumber && checkNumber < toNumber;
     }
 
-    // funkcija gauna int skaiciu, pakeicia ji i string teksta kuri zodziais nusako skaiciu. PVZ: -1684542 turi grazint - "minus vienas milijonas sesi simtai astuoniasdesimt keturi tukstanciai penki simtai keturiasdiasimt du"
-    static string changeOnesToText(int number)
-    {
-        throw new NotImplementedException("TODO: grazinkite skaiciu -9...9 zodziais.");
-    }
 
-    // TODO : sukurti funkcija kuri grazina skaiciu -19...19 zodziais - changeTeensToText
-
-    // TODO : sukurti funkcija kuri grazina skaiciu -99...99 zodziais - changeTensToText
-
-    // TODO : sukurti funkcija kuri grazina skaiciu -999...999 zodziais - changeHundredsToText
-
-    // TODO : sukurti funkcija kuri grazina skaiciu -9999...9999 zodziais - changeThousandsToText
-
-    // TODO : sukurti funkcija kuri grazina skaiciu -9999999...9999999 zodziais - changeMillionsToText
-
-    // TODO : sukurti funkcija kuri grazina skaiciu -9999999999...9999999999 zodziais - changeBilllionsToText
 
 
 
